@@ -1,4 +1,5 @@
 import { hashPass } from "../utils/pass.js"
+import { createSession } from '../utils/session.js'
 
 export const controllerOne = (req, res) => {
   res.status(200).json({
@@ -13,10 +14,13 @@ export const controllerTwo = (req, res) => {
   })
 }
 
-export const controllerThree = async (req, res) => {
+export const startSession = async (req, res) => {
   const { name, mail, pass } = req.body;
+
+  const newtoken = await createSession({ role: "Admin" })
   const securePass = await hashPass(pass);
   res.status(201).json({
-    message: `User created with name: ${name}, mail: ${mail} and pass: ${securePass}`
+    message: 'Session created successfully',
+    session: newtoken
   })
 }
