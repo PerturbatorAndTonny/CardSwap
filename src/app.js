@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 
-import routeOne from "./routes/routeOne.js";
+import sessionRouter from "./routes/sessionRoutes.js";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(cors({
   credentials: true
 }))
 
-app.use("/api/v1", routeOne)
+app.use("/api/v1", sessionRouter)
 
 
 app.use((req, res, next) => {
