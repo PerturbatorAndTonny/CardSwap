@@ -1,4 +1,5 @@
-import { validateSession } from '../utils/session.js'
+// oxlint-disable no-unused-vars
+import { validateSession, isBlackListed } from '../utils/session.js'
 const key = process.env.JWT_KEY
 
 export const verifyToken = async (req, res, next) => {
@@ -10,14 +11,16 @@ export const verifyToken = async (req, res, next) => {
     })
   }
 
+  if (isBlackListed(token)) {
+    res.status(401).json({ error: "Token inválido o expirado" });
+    return;
+  }
+
   try {
     const decoded = await validateSession(token, key)
-    console.log(decoded)
-    data.user = decoded
-    //console.log(data.user)
+    req.user = decoded
     next()
   } catch (error) {
-    console.log(error)
     return res.status(401).json({
       error: 'Token expirado o invalido'
     })
