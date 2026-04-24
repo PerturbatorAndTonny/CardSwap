@@ -3,12 +3,15 @@ import morgan from "morgan";
 
 import routeOne from "./routes/routeOne.js";
 
+import cardRoutes from "./routes/cardRoutes.js";
+
 const app = express();
 
 app.use(express.json())
 app.use(morgan("dev"))
 
 app.use("/api/v1", routeOne)
+app.use("/api/v1", cardRoutes);
 
 
 app.use((req, res, next) => {
