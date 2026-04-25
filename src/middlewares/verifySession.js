@@ -26,3 +26,19 @@ export const verifyToken = async (req, res, next) => {
     })
   }
 }
+
+export const verifyRole = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      res.status(401).json({ error: "No autenticado" });
+      return;
+    }
+
+    if (!roles.includes(req.user.role)) {
+      res.status(403).json({ error: "No tenés permiso para este recurso" });
+      return;
+    }
+
+    next();
+  };
+};
