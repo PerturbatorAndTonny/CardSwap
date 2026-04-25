@@ -1,13 +1,16 @@
 // oxlint-disable no-unused-vars
 import { Card } from "../models/cardModel.js"
 
-function updateCardModel(id, reviewState, reason){ //la funcion es declarada para el modelo(simulado)
-    return{
-        id,
-        reviewState,
-        reason: reason || "No aplica",
-        updatedAt: new Date().toISOString()
-    };
+async function updateCardModel(id, reviewState, reason){ //la funcion es declarada para el modelo(simulado)
+    const updateCardReview = await Card.findByIdAndUpdate(
+        {_id: id},
+        { $set: {
+            reviewState: reviewState,
+            reason: reason || "No aplica",
+        }},
+        { new: true } 
+    )
+    return updateCardReview
 }
 
 async function saveCard_DB(cardData){
@@ -16,12 +19,12 @@ async function saveCard_DB(cardData){
 }
 
 //Arrow function para el controlador (como pide el proyecto)
-export const patchCardReview = (req, res) => {
+export const patchCardReview = async (req, res) => {
     const {id}= req.params;
     const {reviewState, reason} = req.body;
 
     try{
-        const updatedCard = updateCardModel(id, reviewState, reason);
+        const updatedCard = await updateCardModel(id, reviewState, reason);
 
         //respondemos con 201 segun el criterio que se tenga de aceptación
         res.status(201).json(updatedCard);
