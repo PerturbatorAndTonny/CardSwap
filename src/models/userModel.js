@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { required } from "zod/mini";
 
 // Extrae Schema y model desde mongoose
 const { Schema, model } = mongoose;
@@ -30,13 +29,7 @@ function userSchema(){
                 required: true,
                 unique: true, // no puede haber dos usuarios con el mismo mail
                 trim: true, // convierte el mail a minúsculas automáticamente
-            },
-            // Campo descripción
-            description: {
-                type: String,
-                required: true,
-                trim: true,
-            },
+            }
         },
         { timestamps: true } // agrega createdAt y updatedAt automáticamente
     );
