@@ -3,6 +3,8 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 
+import cardRoutes from "./routes/cardRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import sessionRouter from "./routes/sessionRoutes.js";
 
 const app = express();
@@ -19,12 +21,13 @@ app.use(cors({
 }))
 
 app.use("/api/v1", sessionRouter)
-
+app.use("/api/v1", cardRoutes);
+app.use("/api/v1", userRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({
-    message: "Not found"
-  })
-})
-
+    message: "Not found",
+  });
+});
+ 
 export default app;
