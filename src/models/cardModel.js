@@ -21,6 +21,10 @@ function cardSchema(){
       enum: ["pendiente a revisión", "aprobado", "rechazado"],
       default: "pendiente a revisión"
     },
+    reason: {
+      type: String,
+      default: "No aplica"
+    },
     idTrader: {
       type: Schema.Types.ObjectId,
       required: true,
