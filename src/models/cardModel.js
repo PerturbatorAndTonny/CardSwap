@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const { Schema, model } = mongoose;
 
-function cardSchema(){
+function cardSchema() {
   const schema = new Schema({
     status: {
       type: String,
@@ -30,8 +30,29 @@ function cardSchema(){
       required: true,
       ref: "User"
     }
-  }, { timestamps: true})
+  }, { timestamps: true })
   return model("Card", schema);
 }
 
 export const Card = cardSchema();
+
+
+export async function saveCard(cardData) {
+  const newCard = await Card.create(cardData)
+  return newCard;
+}
+
+
+export async function updateReviewCard(id, reviewState, reason) {
+  const updateCardReview = await Card.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        reviewState: reviewState,
+        reason: reason || "No aplica",
+      }
+    },
+    { new: true }
+  )
+  return updateCardReview
+}
