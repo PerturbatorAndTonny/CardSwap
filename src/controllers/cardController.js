@@ -1,3 +1,6 @@
+// oxlint-disable no-unused-vars
+import { Card } from "../models/cardModel.js"
+
 function updateCardModel(id, reviewState, reason){ //la funcion es declarada para el modelo(simulado)
     return{
         id,
@@ -7,13 +10,9 @@ function updateCardModel(id, reviewState, reason){ //la funcion es declarada par
     };
 }
 
-function saveCard_DB(cardData){
-    return {
-        id: Math.floor(Math.random()*1000), //esta parte nos genera unn ID que es aleatorio y temporal
-        ...cardData,
-        reviewState: "Pendiente de revisión", //este esta por defecto
-        createdAt: new Date().toISOString()
-    };
+async function saveCard_DB(cardData){
+    const newCard = await Card.create(cardData)
+    return newCard;
 }
 
 //Arrow function para el controlador (como pide el proyecto)
@@ -31,16 +30,17 @@ export const patchCardReview = (req, res) => {
     }
 };
 
-export const createdCard = (req, res) =>{
-    const { status, edition, language, idTrader} = req.body;
+export const createdCard = async (req, res) =>{
 
     try{ //criterio de aceptación donde se valida la existencia del trader
+
+        const { status, edition, language, idTrader} = req.body;
         const traderExist = true;
 
         if(!traderExist){
             return res.status(400).json({message: "Usuario No Encontrado"});
         }
-        const newCard = saveCard_DB({status, edition, language, idTrader});
+        const newCard = await saveCard_DB({status, edition, language, idTrader});
 
         res.status(201).json(newCard);
     }catch(error){
