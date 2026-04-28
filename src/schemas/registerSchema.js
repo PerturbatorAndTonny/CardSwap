@@ -14,4 +14,10 @@ export const registerSchema = z.strictObject({
  
   // mail debe ser string con formato de email válido y es único en el sistema
   mail: z.email("El correo no es válido"),
+
+  //campo que solicitara el rol
+  //el enum le dice a zod que valide el rol apenas el usuario se registre
+  role: z.enum(["admin", "moderador", "usuario"],{
+    errorMap: () => ({message: "El Rol NO es valido. Porfavor use: admin, moderador o usuario"})
+  }).default("usuario") //señala que el rol que se dara por defecto es el de usuario
 });
