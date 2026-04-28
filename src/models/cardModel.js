@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-
+ 
 const { Schema, model } = mongoose;
-
+ 
 function cardSchema() {
   const schema = new Schema({
     status: {
@@ -31,17 +31,40 @@ function cardSchema() {
       ref: "User"
     }
   }, { timestamps: true })
+ 
   return model("Card", schema);
 }
-
+ 
 export const Card = cardSchema();
-
+ 
 
 export async function saveCard(cardData) {
   const newCard = await Card.create(cardData)
   return newCard;
 }
+ 
 
+export async function getAllCards() {
+  const cards = await Card.find();
+  return cards;
+}
+ 
+
+export async function getCardById(id) {
+  const card = await Card.findById(id);
+  return card;
+}
+ 
+
+export async function updateCard(id, cardData) {
+  const updatedCard = await Card.findByIdAndUpdate(
+    id,
+    { $set: cardData },
+    { new: true }
+  );
+  return updatedCard;
+}
+ 
 
 export async function updateReviewCard(id, reviewState, reason) {
   const updateCardReview = await Card.findByIdAndUpdate(
