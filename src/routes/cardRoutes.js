@@ -10,6 +10,7 @@ router.post("/card", verifyData(createCardSchema), createdCard);
 
 router.patch("/card/:id", verifyData(reviewCardSchema), patchCardReview);
 
-router.delete("/card/:id", verifyToken, deleteCard);
+//verifyToken comprueba que se pida la identificación JWT antes de borrar algo
+router.delete("/card/:id", verifyToken, deleteCard); 
 
 export default router;
