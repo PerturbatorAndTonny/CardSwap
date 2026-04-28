@@ -51,7 +51,7 @@ export const editUser = async (req, res) => {
   const { id } = req.params;
  
   // Obtenemos los datos del body (ya validados por el middleware verifyData)
-  const { nombre, edad, pass, mail, description } = req.body;
+  const { nombre, edad, pass, mail, description, role } = req.body;
  
   // Verificamos si el mail ya está en uso por OTRO usuario
   const mailExists = await User.findOne({ mail, _id: { $ne: id } });
@@ -67,7 +67,7 @@ export const editUser = async (req, res) => {
   // Buscamos el usuario por id y actualizamos sus datos
   const updatedUser = await User.findByIdAndUpdate(
     id,
-    { nombre, edad, pass: securePass, mail, description },
+    { nombre, edad, pass: securePass, mail, description, role },
     { new: true }
   );
  
@@ -86,6 +86,7 @@ export const editUser = async (req, res) => {
       id: updatedUser._id,
       nombre: updatedUser.nombre,
       mail: updatedUser.mail,
+      role: updatedUser.role,
       edad: updatedUser.edad,
       description: updatedUser.description,
     },
