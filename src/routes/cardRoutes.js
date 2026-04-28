@@ -2,7 +2,7 @@ import { Router } from "express";
 import { verifyData } from "../middlewares/verifyData.js";
 import { createCardSchema, reviewCardSchema } from "../schemas/cardSchema.js";
 import { createdCard, patchCardReview, deleteCard } from "../controllers/cardController.js";
-import { verifyToken } from "../middlewares/authMiddleware.js";
+import { verifyToken } from "../middlewares/verifySession.js";
 
 const router = Router();
 
