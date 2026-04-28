@@ -5,7 +5,7 @@ import { hashPass } from "../utils/pass.js";
 export const registerUser = async (req, res) => {
  
   // Obtenemos los datos del body (ya validados por el middleware verifyData)
-  const { nombre, edad, pass, mail } = req.body;
+  const { nombre, edad, pass, mail, role } = req.body;
  
   // Verificamos si el mail ya está registrado en la base de datos
   const mailExists = await User.findOne({ mail });
@@ -26,6 +26,7 @@ export const registerUser = async (req, res) => {
     edad,
     pass: securePass,
     mail,
+    role: role || "usuario",
     description: "",
   });
  
@@ -38,6 +39,7 @@ export const registerUser = async (req, res) => {
       nombre: newUser.nombre,
       mail: newUser.mail,
       edad: newUser.edad,
+      role: newUser.role,
     },
   });
 };

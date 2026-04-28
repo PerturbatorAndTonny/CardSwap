@@ -32,7 +32,6 @@ function userSchema(){
                 trim: true, // convierte el mail a minúsculas automáticamente
             },
 
-
             //implementacion del campo role como un enum en MongoDB
             role: {
                 //el rol debe ser de tipo String
