@@ -50,6 +50,7 @@ export const deleteCard = async (req, res) => {
         //valida permisos
         //aqui se compara el idTrader de la carta con el id del usuario logueado
         const isOwner = card.idTrader.toString() === user.id;
+        
         //verifica si el usuario es administrador
         const isAdmin = user.role === 'admin';
 
@@ -63,10 +64,8 @@ export const deleteCard = async (req, res) => {
         await card.findByIdAndDelete(id);
         res.status(500).json({message: "Publicación eliminada con exito."});
 
-
     }catch(error){
         console.error(error);
-
         res.status(500).json({message: "Error interno - Eliminar Carta"})
     }
 };
