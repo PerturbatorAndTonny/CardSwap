@@ -15,7 +15,8 @@ function userSchema(){
             },
             // Campo edad
             edad: {
-                type: String,
+                //type:Number para que haya concidencia con Zod (Number)
+                type: Number,
                 required: true,
             },
             // Campo contraseña
@@ -34,10 +35,13 @@ function userSchema(){
 
             //implementacion del campo role como un enum en MongoDB
             role: {
-                type: String,      //el rol debe ser de tipo String
+                //el rol debe ser de tipo String
+                type: String,
                 enum:["admin", "moderador", "usuario"],
                 default: "usuario"
-            }, description: {type: String, default: ""} //define el usuario de tipo default 'usuario'
+            }, 
+            //define el usuario de tipo default 'usuario'
+            description: {type: String, default: ""}
         },
 
         { timestamps: true } // agrega createdAt y updatedAt automáticamente
