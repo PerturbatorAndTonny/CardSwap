@@ -15,7 +15,7 @@ function userSchema(){
             },
             // Campo edad
             edad: {
-                //type:Number para que haya concidencia con Zod (Number)
+            //type:Number para que haya concidencia con Zod (Number)
                 type: Number,
                 required: true,
             },
