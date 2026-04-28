@@ -56,3 +56,9 @@ export async function updateReviewCard(id, reviewState, reason) {
   )
   return updateCardReview
 }
+
+//función para eliminar una carta por el ID
+export async function deleteCardID(id) {
+  const deleteCardID = await Card.findByIdAndDelete(id);
+  return deletedCard;
+}
