@@ -36,7 +36,6 @@ export const createdCard = async (req, res) => {
 
 //controlador para eliminar carta
 export const deleteCard = async (req, res) => {
-    console.log("Datos del usuario en req:", req.user);
     const { id } = req.params;
     const user = req.user;
 
@@ -50,14 +49,10 @@ export const deleteCard = async (req, res) => {
 
         //valida permisos
         //aqui se compara el idTrader de la carta con el id del usuario logueado
-        //const isOwner = card.idTrader.toString() === user.id;
         const isAdmin = user.role && user.role.toLowerCase() === 'admin';
 
         //verificamos si es dueño
         const isOwner = user.id && card.idTrader.toString() === user.id.toString();
-
-        //verifica si el usuario es administrador
-        //const isAdmin = user.role === 'admin';
 
         if(!isOwner && !isAdmin){
             return res.status(403).json({
