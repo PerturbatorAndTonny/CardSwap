@@ -19,4 +19,10 @@ export const userEditSchema = z.strictObject({
 
   // description debe ser string y tener al menos 1 caracter
     description: z.string().min(1, "La descripción es requerida"),
+
+  //Se agrega un campo de rol para edición
+  role: z.enum(["admin", "moderador", "usuario"],{
+    //indica al usuario que seleccione un rol entre los 3 disponibles, y verifica que la accion se cumpla.
+    errorMap: () => ({message: "Rol no válido. Por favor use: admin, moderador o usuario"})
+  }).default("usuario")
 });
