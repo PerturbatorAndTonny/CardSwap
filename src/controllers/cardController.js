@@ -1,6 +1,9 @@
 // oxlint-disable no-unused-vars
 import { saveCard, updateReviewCard, getAllCards, getCardById, updateCard } from "../models/cardModel.js"
-
+ 
+// Arrow function para el controlador (regla del proyecto)
+ 
+// GET /card → retorna todas las cartas registradas
 export const getCards = async (req, res) => {
   try {
     const cards = await getAllCards();
@@ -15,14 +18,15 @@ export const getCards = async (req, res) => {
     res.status(500).json({ message: "Error interno - Listar cartas" });
   }
 };
-
+ 
+// GET /card/:id → retorna una única carta por su id
 export const getCard = async (req, res) => {
   try {
     const { id } = req.params;
  
     const card = await getCardById(id);
  
-
+    // Si no encontró la carta con ese id, devolvemos 404
     if (!card) {
       return res.status(404).json({ message: "Carta no encontrada" });
     }
@@ -32,7 +36,8 @@ export const getCard = async (req, res) => {
     res.status(500).json({ message: "Error interno - Buscar carta" });
   }
 };
-
+ 
+// PUT /card/:id → actualiza los datos de una carta existente
 export const editCard = async (req, res) => {
   try {
     const { id } = req.params;
@@ -40,7 +45,7 @@ export const editCard = async (req, res) => {
  
     const updatedCard = await updateCard(id, { status, edition, language });
  
-
+    // Si no encontró la carta con ese id, devolvemos 404
     if (!updatedCard) {
       return res.status(404).json({ message: "Carta no encontrada" });
     }
@@ -51,7 +56,7 @@ export const editCard = async (req, res) => {
   }
 };
  
-
+// PATCH /card/:id → actualiza el estado de revisión de una carta
 export const patchCardReview = async (req, res) => {
   const { id } = req.params;
   const { reviewState, reason } = req.body;
@@ -65,7 +70,7 @@ export const patchCardReview = async (req, res) => {
   }
 };
  
-
+// POST /card → crea una nueva carta
 export const createdCard = async (req, res) => {
   try {
     const { status, edition, language, idTrader } = req.body;
@@ -81,5 +86,4 @@ export const createdCard = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error interno - Publicar Carta" });
   }
-};
 };
