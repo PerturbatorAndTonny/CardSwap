@@ -32,3 +32,7 @@ export async function updateReviewCard(id, reviewState, reason) {
   )
   return updateCardReview
 }
+export async function getAllCards() {
+  const cards = await Card.find();
+  return cards;
+}
