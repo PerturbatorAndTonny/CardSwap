@@ -36,3 +36,8 @@ export async function getAllCards() {
   const cards = await Card.find();
   return cards;
 }
+
+export async function getCardById(id) {
+  const card = await Card.findById(id);
+  return card;
+}
