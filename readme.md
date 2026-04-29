@@ -5,8 +5,9 @@ Elaborado por
 - Miguel Angel Quintin
 - Andres Fernando Malagon
 
-<img width="1138" height="577" alt="image" src="https://github.com/user-attachments/assets/c0d66d85-e274-420f-8ffa-3f7ec1a5bdaf" />
+_**Para este proyecto nos basamos en la metodologia de trabajo trunk-based development**_
 
+<img width="1137" height="580" alt="image" src="https://github.com/user-attachments/assets/c50972dc-cd1e-4db3-ad1c-8d527afcc7aa" />
 
 > [!IMPORTANT]
 > Este proyecto necesita las siguientes instalaciones
