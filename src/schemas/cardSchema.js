@@ -21,5 +21,5 @@ export const createCardSchema = z.strictObject({
     }),
     edition: z.string().min(8, "La edicionn debe tener minimo 8 caracteres"),
     language: z.string().min(1, "El idioma es obligatorio"),
-    idTrader: z.string().min(1, "El id del trader es obligatorio")
+    idTrader: z.string().min(1, "El id del trader es obligatorio").optional()
 });

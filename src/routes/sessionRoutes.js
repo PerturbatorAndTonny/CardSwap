@@ -7,6 +7,6 @@ import { startSession, closeSession } from "../controllers/sessionController.js"
 const router = Router();
 
 router.post("/session/start", verifyData(schemaOne), startSession);
-router.delete("/session/close", verifyToken, verifyRole("Admin"), closeSession)
+router.delete("/session/close", verifyToken, verifyRole("admin"), closeSession)
 
 export default router;

@@ -21,7 +21,7 @@ export const startSession = async (req, res) => {
     });
   }
 
-  const newtoken = await createSession({ role: "Admin" })
+  const newtoken = await createSession({ role: isUser.role, id: isUser._id })
   res.status(201).cookie("token", newtoken).json({
     message: 'Session created successfully'
   })
