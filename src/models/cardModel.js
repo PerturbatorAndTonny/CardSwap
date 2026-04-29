@@ -50,3 +50,8 @@ export async function updateCard(id, cardData) {
   );
   return updatedCard;
 }
+
+export async function deleteCard(id) {
+  const deletedCard = await Card.findByIdAndDelete(id);
+  return deletedCard;
+}
