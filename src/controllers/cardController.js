@@ -93,12 +93,12 @@ export const deleteCard = async (req, res) => {
     const { id } = req.params;
     const user = req.user;
 
-    try{
+    try {
         // Buscamos una carta primero para validar quien es el dueño
         const card = await Card.findById(id);
 
-        if(!card){
-            return res.status(404).json({ message: "La carta NO existe"});
+        if (!card) {
+            return res.status(404).json({ message: "La carta NO existe" });
         }
 
         //valida permisos
@@ -108,7 +108,7 @@ export const deleteCard = async (req, res) => {
         //verificamos si es dueño
         const isOwner = user.id && card.idTrader.toString() === user.id.toString();
 
-        if(!isOwner && !isAdmin){
+        if (!isOwner && !isAdmin) {
             return res.status(403).json({
                 message: "No tiene permisos para eliminar la publicación"
             });
@@ -118,10 +118,9 @@ export const deleteCard = async (req, res) => {
         await Card.findByIdAndDelete(id);
 
         //status 200 es exito (500 error)
-        res.status(200).json({message: "Publicación eliminada con exito."});
+        res.status(200).json({ message: "Publicación eliminada con exito." });
 
-    }catch(error){
-        console.error(error);
-        res.status(500).json({message: "Error interno - Eliminar Carta"})
+    } catch (error) {
+        res.status(500).json({ message: "Error interno - Eliminar Carta" })
     }
 };
