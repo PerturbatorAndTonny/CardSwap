@@ -23,37 +23,37 @@ export const createdCard = async (req, res) => {
 export const getCard = async (req, res) => {
   try {
     const { id } = req.params;
- 
+
     const card = await getCardById(id);
- 
+
     // Si no encontró la carta con ese id, devolvemos 404
     if (!card) {
       return res.status(404).json({ message: "Carta no encontrada" });
     }
- 
+    
     res.status(200).json(card);
   } catch (error) {
     res.status(500).json({ message: "Error interno - Buscar carta" });
   }
 };
- 
+
 // PUT /card/:id → actualiza los datos de una carta existente
 export const editCard = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status, edition, language } = req.body;
+    try {
+        const { id } = req.params;
+        const { status, edition, language } = req.body;
 
-    const updatedCard = await updateCard(id, { status, edition, language });
+        const updatedCard = await updateCard(id, { status, edition, language });
 
-    // Si no encontró la carta con ese id, devolvemos 404
-    if (!updatedCard) {
-      return res.status(404).json({ message: "Carta no encontrada" });
+        // Si no encontró la carta con ese id, devolvemos 404
+        if (!updatedCard) {
+            return res.status(404).json({ message: "Carta no encontrada" });
+        }
+
+        res.status(201).json(updatedCard);
+    } catch (error) {
+        res.status(500).json({ message: "Error interno - Actualizar carta" });
     }
-
-    res.status(201).json(updatedCard);
-  } catch (error) {
-    res.status(500).json({ message: "Error interno - Actualizar carta" });
-  }
 };
 
 // PATCH /card/:id → actualiza el estado de revisión de una carta
@@ -79,6 +79,13 @@ export const createdCard = async (req, res) => {
     if (!traderExist) {
       return res.status(400).json({ message: "Usuario No Encontrado" });
     }
+ 
+    const newCard = await saveCard({ status, edition, language, idTrader });
+ 
+    res.status(201).json(newCard);
+  } catch (error) {
+    res.status(500).json({ message: "Error interno - Publicar Carta" });
+  }
 };
 
 //controlador para eliminar carta
