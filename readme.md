@@ -1,5 +1,13 @@
 # CardSwap
 
+Elaborado por
+- Santiago López Torres
+- Miguel Angel Quintin
+- Andres Fernando Malagon
+
+<img width="1138" height="577" alt="image" src="https://github.com/user-attachments/assets/c0d66d85-e274-420f-8ffa-3f7ec1a5bdaf" />
+
+
 > [!IMPORTANT]
 > Este proyecto necesita las siguientes instalaciones
 > - [Node Js](https://nodejs.org/es/download) versiones 22 o superior
