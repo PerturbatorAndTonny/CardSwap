@@ -41,3 +41,12 @@ export async function getCardById(id) {
   const card = await Card.findById(id);
   return card;
 }
+
+export async function updateCard(id, cardData) {
+  const updatedCard = await Card.findByIdAndUpdate(
+    id,
+    { $set: cardData },
+    { new: true }
+  );
+  return updatedCard;
+}
