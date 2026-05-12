@@ -6,7 +6,8 @@ import { saveCard, updateReviewCard, getAllCards, getCardById, updateCard, Card 
 // GET /card → retorna todas las cartas registradas
 export const getCards = async (req, res) => {
     try {
-        const cards = await getAllCards();
+        const { type } = req.params;
+        const cards = await getAllCards(type);
 
         // Si no hay cartas registradas, devolvemos 404
         if (!cards || cards.length === 0) {
