@@ -1,8 +1,8 @@
 import * as z from 'zod';
 
 export const reviewCardSchema = z.strictObject({
-    reviewState: z.enum(["Pendiente para revisión", "rechazado", "aprobado"], {
-        errorMap: () => ({ message: "Estado no válido. Use: 'pendiente a revisión','rechazado' ó 'aprobado'"})        
+    reviewState: z.enum(["Pendpendienteiente", "rechazado", "aprobado"], {
+        errorMap: () => ({ message: "Estado no válido. Use: 'pendiente','rechazado' ó 'aprobado'"})        
     }),
     reason: z.string().optional()
 }).refine((data)=>{
