@@ -15,11 +15,10 @@ export const reviewCardSchema = z.strictObject({
 });
 
 export const createCardSchema = z.strictObject({
-    status: z.number({
-        requiredError: "El estado esta siendo requerido",
-        invalidTypeError: "El estado debe ser numerico"
+    condition: z.enum(["nuevo", "usado", "dañado"], {
+        errorMap: () => ({ message: "Condición no válida. Use: 'nuevo', 'usado' ó 'dañado'"})
     }),
-    edition: z.string().min(8, "La edicionn debe tener minimo 8 caracteres"),
+    edition: z.string().min(8, "La edición debe tener minimo 8 caracteres"),
     language: z.string().min(1, "El idioma es obligatorio"),
     idTrader: z.string().min(1, "El id del trader es obligatorio").optional()
 });
