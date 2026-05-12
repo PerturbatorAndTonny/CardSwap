@@ -26,8 +26,8 @@ function cardSchema() {
     // Estado de revisión de la carta
     reviewState: {
       type: String,
-      enum: ["pendiente a revisión", "aprobado", "rechazado"],
-      default: "pendiente a revisión"
+      enum: ["pendiente", "aprobado", "rechazado"],
+      default: "pendiente"
     },
 
     // Motivo en caso de rechazo
@@ -56,9 +56,27 @@ export async function saveCard(cardData) {
 }
 
 // Retorna todas las cartas registradas en la base de datos
-export async function getAllCards() {
+export async function getAllCards(type) {
+
+  if (type === "aprobado") {
+    const cards = await Card.find({ reviewState: "aprobado" })
+    return cards;
+  }
+
+  if (type === "rechazado") {
+    const cards = await Card.find({ reviewState: "rechazado" })
+    return cards;
+  }
+
+  if (type === "pendiente") {
+    const cards = await Card.find({ reviewState: "pendiente" })
+    return cards;
+  }
+
+  if (type === "todos") {
   const cards = await Card.find();
   return cards;
+  }
 }
 
 // Retorna una única carta buscada por su id
