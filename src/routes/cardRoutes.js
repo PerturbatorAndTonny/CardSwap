@@ -11,7 +11,7 @@ const router = Router();
 router.post("/card", verifyData(createCardSchema), verifyToken, verifyRole("admin"), createdCard);
  
 // GET /api/v1/card → listar todas las cartas
-router.get("/card", verifyToken, verifyRole("admin"), getCards);
+router.get("/card/:type", verifyToken, verifyRole("admin"), getCards);
  
 // GET /api/v1/card/:id → obtener una carta por id
 router.get("/card/:id", verifyToken, verifyRole("admin"), getCard);
