@@ -5,38 +5,41 @@ const { Schema, model } = mongoose;
 // Definición del esquema de la carta
 function cardSchema() {
   const schema = new Schema({
-    // Estado de la carta (ej: disponible, intercambiada)
     status: {
       type: String,
+      enum: ["disponible", "en_intercambio", "intercambiado"],
+      default: "disponible",
       required: true,
     },
 
-    // Edición de la carta
+    condition: {
+      type: String,
+      enum: ["nuevo", "usado", "dañado"],
+      default: "nuevo",
+      required: true,
+    },
+
     edition: {
       type: String,
       required: true
     },
 
-    // Idioma de la carta
     language: {
       type: String,
       required: true
     },
 
-    // Estado de revisión de la carta
     reviewState: {
       type: String,
       enum: ["pendiente", "aprobado", "rechazado"],
       default: "pendiente"
     },
 
-    // Motivo en caso de rechazo
     reason: {
       type: String,
       default: "No aplica"
     },
 
-    // Referencia al usuario (trader)
     idTrader: {
       type: Schema.Types.ObjectId,
       required: true,
