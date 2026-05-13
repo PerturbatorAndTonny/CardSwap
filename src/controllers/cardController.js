@@ -76,7 +76,9 @@ export const createdCard = async (req, res) => {
     try {
         const { status, edition, language, idTrader } = req.body;
 
-        const newCard = await saveCard({  status, edition, language, idTrader });
+        const traderId = idTrader || req.user.id;
+
+        const newCard = await saveCard({  status, edition, language, idTrader: traderId });
 
         return res.status(201).json({
             message: "Carta Registrada",

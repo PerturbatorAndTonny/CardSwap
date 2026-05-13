@@ -8,7 +8,7 @@ import { createdCard, patchCardReview, getCards, getCard, editCard, deleteCard }
 const router = Router();
  
 // POST /api/v1/card → crear una nueva carta
-router.post("/card", verifyData(createCardSchema), verifyToken, verifyRole("admin"), createdCard);
+router.post("/card", verifyData(createCardSchema), verifyToken, /*verifyRole("admin"),*/ createdCard);
  
 // GET /api/v1/card → listar todas las cartas
 router.get("/card/:type", verifyToken, verifyRole("admin"), getCards);

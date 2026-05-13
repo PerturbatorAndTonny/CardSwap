@@ -3,6 +3,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors"
 
+import offerRoutes from "./routes/offerRoutes.js";
 import cardRoutes from "./routes/cardRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import sessionRouter from "./routes/sessionRoutes.js";
@@ -23,6 +24,7 @@ app.use(cors({
 app.use("/api/v1", sessionRouter)
 app.use("/api/v1", cardRoutes);
 app.use("/api/v1", userRoutes);
+app.use("/api/v1", offerRoutes);
 
 app.use((req, res, next) => {
   res.status(404).json({
