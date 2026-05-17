@@ -5,3 +5,12 @@ export const banSchema = z.strictObject({
 
     idAdmin: z.string().min(1, "El id del administrador es requerido"),
 });
+
+export const reportActionSchema = z.strictObject({
+    status: z.enum(
+        ["pendiente", "advertido", "eliminado", "sancionado"],
+        {
+        required_error: "El estado es requerido",
+        }
+    ),
+});
