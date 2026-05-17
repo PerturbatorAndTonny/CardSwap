@@ -1,4 +1,5 @@
 import { getCardById } from '../models/cardModel.js'
+import { getOfferById } from '../models/offerModel.js'
 
 export async function validateTargetCard(idCard, idOfertante, res) {
   const targetCard = await getCardById(idCard);
@@ -47,7 +48,7 @@ export async function validateCardOffer(offeredCard, idOfferante, res) {
   return cardToOffer;
 }
 
-export function validateMoneyOffer (amount, currency, res) {
+export function validateMoneyOffer(amount, currency, res) {
   if (!amount || amount <= 0) {
     res.status(400).json({ message: "Debes indicar un monto válido" });
     return false;
@@ -55,6 +56,32 @@ export function validateMoneyOffer (amount, currency, res) {
 
   if (!currency) {
     res.status(400).json({ message: "Debes indicar la moneda (USD o COP)" });
+    return false;
+  }
+  return true;
+}
+
+export async function validateOfferExists(idOffer, res) {
+  const isOffer = await getOfferById(idOffer);
+
+  if (!isOffer) {
+    res.status(404).json({ message: "La oferta no existe" });
+    return null;
+  }
+
+  if (isOffer.status !== "pendiente") {
+    res.status(400).json({ message: "La oferta ya no está pendiente" });
+    return null;
+  }
+
+  return isOffer;
+}
+
+export async function validatePublisherOwnership(offer, idTrader, res) {
+  const targetCard = await getCardById(offer.idCard)
+
+  if (targetCard.idTrader.toString() !== idTrader) {
+    res.status(403).json({ message: "No eres el dueño de esta publicación" });
     return false;
   }
   return true;
