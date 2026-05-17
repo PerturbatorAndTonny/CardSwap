@@ -1,19 +1,6 @@
 import { User } from "../models/userModel.js";
 import { saveBan, findBanByUser } from "../models/banModel.js";
-import {
-    getAllReports,
-} from "../models/reportModel.js";
-
-import {
-    getAllReports,
-    getReportById,
-} from "../models/reportModel.js";
-
-import {
-    getAllReports,
-    getReportById,
-    updateReportStatus,
-} from "../models/reportModel.js";
+import { getAllReports, getReportById, updateReportStatus } from "../models/reportModel.js";
 
 export const banUser = async (req, res) => {
 try {
