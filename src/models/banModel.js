@@ -30,3 +30,8 @@ const schema = new Schema(
 }
 
 export const Ban = banSchema();
+
+export async function saveBan(banData) {
+    const newBan = await Ban.create(banData);
+    return newBan;
+}
