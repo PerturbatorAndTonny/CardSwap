@@ -41,3 +41,19 @@ export async function saveReport(reportData) {
     const newReport = await Report.create(reportData);
     return newReport;
 }
+
+export async function getAllReports() {
+    const reports = await Report.find()
+        .populate("idReporter", "nombre mail")
+        .populate("idReported", "nombre mail");
+
+    return reports;
+}
+
+export async function getReportById(id) {
+    const report = await Report.findById(id)
+        .populate("idReporter", "nombre mail")
+        .populate("idReported", "nombre mail");
+
+    return report;
+}
