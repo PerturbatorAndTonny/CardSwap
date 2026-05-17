@@ -1,6 +1,6 @@
 import { User } from "../models/userModel.js";
 import { saveBan, findBanByUser } from "../models/banModel.js";
-import { getAllReports, getReportById, updateReportStatus } from "../models/reportModel.js";
+import { getAllReports, getReportById, updateReportStatus, saveReport } from "../models/reportModel.js";
 
 export const banUser = async (req, res) => {
 try {
@@ -104,4 +104,25 @@ try {
         message: "Error interno - Acción sobre reporte",
         });
     }
+};
+// POST /reports → crea un nuevo reporte
+export const createReport = async (req, res) => {
+  try {
+    const { idReporter, idReported, reason } = req.body;
+
+    // Verificamos que el usuario reportado existe
+    const user = await User.findById(idReported);
+    if (!user) {
+      return res.status(404).json({ message: "Usuario reportado no encontrado" });
+    }
+
+    const report = await saveReport({ idReporter, idReported, reason });
+
+    return res.status(201).json({
+      message: "Reporte creado correctamente",
+      report,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error interno - Crear reporte" });
+  }
 };
