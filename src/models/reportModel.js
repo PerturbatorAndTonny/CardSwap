@@ -36,3 +36,8 @@ const schema = new Schema(
 }
 
 export const Report = reportSchema();
+
+export async function saveReport(reportData) {
+    const newReport = await Report.create(reportData);
+    return newReport;
+}
