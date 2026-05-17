@@ -97,3 +97,66 @@ export const acceptOffer = async (req, res) => {
     res.status(500).json({ message: "Error interno del servidor", error });
   }
 };
+
+// oxlint-disable-next-line max-lines-per-function
+export const confirmDelivery = async (req, res) => {
+  try {
+    const { idOffer } = req.params;
+    const idUser = req.user.id;
+
+    const offer = await Offer.findById(idOffer);
+
+    if (!offer) {
+      res.status(404).json({ message: "La oferta no existe" });
+      return;
+    }
+
+    if (offer.status !== "aceptada") {
+      res.status(400).json({ message: "La oferta no está en estado aceptada" });
+      return;
+    }
+
+    const targetCard = await Card.findById(offer.idCard);
+
+    const isPublisher = targetCard.idTrader.toString() === idUser;
+    const isOfferante = offer.idOfferante.toString() === idUser;
+
+    if (!isPublisher && !isOfferante) {
+      res.status(403).json({ message: "No eres parte de este trade" });
+      return;
+    }
+
+    if (isPublisher && offer.confirmation.byPublisher) {
+      res.status(400).json({ message: "Ya confirmaste la entrega anteriormente" });
+      return;
+    }
+
+    if (isOfferante && offer.confirmation.byOfferante) {
+      res.status(400).json({ message: "Ya confirmaste la entrega anteriormente" });
+      return;
+    }
+
+    if (isPublisher) offer.confirmation.byPublisher = true;
+    if (isOfferante) offer.confirmation.byOfferante = true;
+
+    if (offer.confirmation.byPublisher && offer.confirmation.byOfferante) {
+      offer.status = "completada";
+      targetCard.status = "intercambiado";
+      await targetCard.save();
+    }
+
+    await offer.save();
+
+    const isCompleted = offer.status === "completada";
+
+    res.status(200).json({
+      message: isCompleted
+        ? "Trade completado exitosamente"
+        : "Confirmación registrada, esperando al otro participante",
+      offer
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error interno del servidor", error });
+  }
+};
