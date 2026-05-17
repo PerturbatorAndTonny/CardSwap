@@ -41,9 +41,7 @@ try {
         });
     }
 };
-// ─── HU6 - REVISAR REPORTES ───────────────────────────────────────────────────
 
-// GET /admin/reports → lista todos los reportes
 export const getReports = async (req, res) => {
 try {
     const reports = await getAllReports();
@@ -105,24 +103,24 @@ try {
         });
     }
 };
-// POST /reports → crea un nuevo reporte
+
 export const createReport = async (req, res) => {
-  try {
+try {
     const { idReporter, idReported, reason } = req.body;
 
     // Verificamos que el usuario reportado existe
     const user = await User.findById(idReported);
     if (!user) {
-      return res.status(404).json({ message: "Usuario reportado no encontrado" });
+        return res.status(404).json({ message: "Usuario reportado no encontrado" });
     }
 
     const report = await saveReport({ idReporter, idReported, reason });
 
     return res.status(201).json({
-      message: "Reporte creado correctamente",
-      report,
+        message: "Reporte creado correctamente",
+        report,
     });
-  } catch (error) {
-    res.status(500).json({ message: "Error interno - Crear reporte" });
-  }
+    } catch (error) {
+        res.status(500).json({ message: "Error interno - Crear reporte" });
+    }
 };

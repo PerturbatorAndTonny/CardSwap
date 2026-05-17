@@ -29,7 +29,6 @@ app.use("/api/v1", sessionRouter);
 app.use("/api/v1", cardRoutes);
 app.use("/api/v1", userRoutes);
 
-// Registramos rutas admin
 app.use("/api/v1", adminRoutes);
 
 app.use((req, res, next) => {
