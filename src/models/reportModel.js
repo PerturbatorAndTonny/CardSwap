@@ -1,0 +1,70 @@
+import mongoose from "mongoose";
+
+const { Schema, model } = mongoose;
+
+function reportSchema() {
+const schema = new Schema(
+    {
+        idReporter: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+
+    idReported: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+
+    reason: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+
+    status: {
+        type: String,
+        enum: ["pendiente", "advertido", "eliminado", "sancionado"],
+        default: "pendiente",
+        },
+    },
+    { timestamps: true },
+);
+
+    return model("Report", schema);
+}
+
+export const Report = reportSchema();
+
+export async function saveReport(reportData) {
+    const newReport = await Report.create(reportData);
+    return newReport;
+}
+
+export async function getAllReports() {
+    const reports = await Report.find()
+        .populate("idReporter", "nombre mail")
+        .populate("idReported", "nombre mail");
+
+    return reports;
+}
+
+export async function getReportById(id) {
+    const report = await Report.findById(id)
+        .populate("idReporter", "nombre mail")
+        .populate("idReported", "nombre mail");
+
+    return report;
+}
+
+// Actualiza el estado de un reporte
+export async function updateReportStatus(id, status) {
+    const updatedReport = await Report.findByIdAndUpdate(
+        id,
+        { $set: { status } },
+        { new: true }
+    );
+
+    return updatedReport;
+}

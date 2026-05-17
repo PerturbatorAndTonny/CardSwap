@@ -1,4 +1,5 @@
 // oxlint-disable no-console
+import "dotenv/config";
 import app from "./src/app.js";
 import { mongoConnector } from './src/utils/connection.js'
 
