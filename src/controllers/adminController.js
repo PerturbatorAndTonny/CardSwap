@@ -4,6 +4,11 @@ import {
     getAllReports,
 } from "../models/reportModel.js";
 
+import {
+    getAllReports,
+    getReportById,
+} from "../models/reportModel.js";
+
 export const banUser = async (req, res) => {
 try {
     const { id } = req.params;
@@ -60,6 +65,26 @@ try {
     } catch (error) {
         res.status(500).json({
         message: "Error interno - Listar reportes",
+        });
+    }
+};
+
+export const getReport = async (req, res) => {
+try {
+    const { id } = req.params;
+
+    const report = await getReportById(id);
+
+    if (!report) {
+        return res.status(404).json({
+            message: "Reporte no encontrado",
+        });
+    }
+
+    res.status(200).json(report);
+} catch (error) {
+    res.status(500).json({
+        message: "Error interno - Consultar reporte",
         });
     }
 };
