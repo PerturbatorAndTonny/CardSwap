@@ -35,3 +35,8 @@ export async function saveBan(banData) {
     const newBan = await Ban.create(banData);
     return newBan;
 }
+
+export async function findBanByUser(idUser) {
+    const ban = await Ban.findOne({ idUser });
+    return ban;
+}
