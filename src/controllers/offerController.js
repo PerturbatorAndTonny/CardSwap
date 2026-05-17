@@ -1,6 +1,12 @@
-import { saveOffer, getOffer } from '../models/offerModel.js'
+import { saveOffer, getOffer, Offer } from '../models/offerModel.js'
 
-import { validateCardOffer, validateMoneyOffer, validateTargetCard } from '../utils/offerValidation.js'
+import { 
+  validateCardOffer, 
+  validateMoneyOffer, 
+  validateTargetCard, 
+  validateOfferExists, 
+  validatePublisherOwnership 
+} from '../utils/offerValidation.js'
 
 // oxlint-disable-next-line max-lines-per-function
 export const createOffer = async (req, res) => {
@@ -53,3 +59,41 @@ export const getOffers = async (req, res) => {
     res.status(400).json({ error: error.message })
   }
 }
+
+export const acceptOffer = async (req, res) => {
+  try {
+    const { idOffer } = req.params;
+    const idTrader = req.user.id;
+
+    const offer = await validateOfferExists(idOffer, res);
+    if (!offer) return;
+
+    const targetCard = await validatePublisherOwnership(offer, idTrader, res);
+    if (!targetCard) return;
+
+    // ── 3. Aceptar esta oferta y rechazar las demás de la misma carta ──
+    await Offer.updateMany(
+      {
+        idCard: offer.idCard,
+        _id: { $ne: idOffer },
+        status: "pendiente"
+      },
+      { status: "rechazada" }
+    );
+
+    offer.status = "aceptada";
+    await offer.save();
+
+
+    targetCard.status = "en_intercambio";
+    await targetCard.save();
+
+    res.status(200).json({
+      message: "Oferta aceptada exitosamente",
+      offer
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error interno del servidor", error });
+  }
+};
