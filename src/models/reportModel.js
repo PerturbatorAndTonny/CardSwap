@@ -57,3 +57,14 @@ export async function getReportById(id) {
 
     return report;
 }
+
+// Actualiza el estado de un reporte
+export async function updateReportStatus(id, status) {
+    const updatedReport = await Report.findByIdAndUpdate(
+        id,
+        { $set: { status } },
+        { new: true }
+    );
+
+    return updatedReport;
+}
